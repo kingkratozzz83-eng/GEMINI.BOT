@@ -67,7 +67,7 @@ jobs:
 
       - name: 7. Build Signed APK v5.3 (Update In-Place Without Uninstall)
         run: |
-          gradle assembleDebug --no-daemon --stacktrace
+          gradle assembleDebug --no-daemon --console=plain
           cp app/build/outputs/apk/debug/app-debug.apk Gemini-WA-Bot-v5.3.apk
           ls -lh Gemini-WA-Bot-v5.3.apk
 
