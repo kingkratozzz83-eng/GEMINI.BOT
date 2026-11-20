@@ -1,4 +1,4 @@
-name: Build Gemini WA Bot APK v5.2
+name: Build Gemini WA Bot APK v5.3
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   build-android-apk:
-    name: Compile Engine & Build APK v5.2 (RedMagic Landscape Game Space)
+    name: Compile Engine & Build APK v5.3 (RedMagic Darkness & Side Drawer)
     runs-on: ubuntu-latest
 
     steps:
@@ -65,34 +65,34 @@ jobs:
           gradle-version: '8.7'
           dependency-graph: disabled
 
-      - name: 7. Build Signed APK v5.2 (Update In-Place Without Uninstall)
+      - name: 7. Build Signed APK v5.3 (Update In-Place Without Uninstall)
         run: |
           gradle assembleDebug --no-daemon --stacktrace
-          cp app/build/outputs/apk/debug/app-debug.apk Gemini-WA-Bot-v5.2.apk
-          ls -lh Gemini-WA-Bot-v5.2.apk
+          cp app/build/outputs/apk/debug/app-debug.apk Gemini-WA-Bot-v5.3.apk
+          ls -lh Gemini-WA-Bot-v5.3.apk
 
       - name: 8. Publish APK ke GitHub Releases (Langsung Download!)
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v5.2.${{ github.run_number }}
-          name: "DodosBot / Gemini WA Bot APK v5.2 (RedMagic Landscape) Build #${{ github.run_number }}"
+          tag_name: v5.3.${{ github.run_number }}
+          name: "DodosBot / Gemini WA Bot APK v5.3 (RedMagic Darkness) Build #${{ github.run_number }}"
           body: |
-            ### 🔥 DodosBot / Gemini WhatsApp Bot APK v5.2 (RedMagic Landscape Game Space)
-            Klik **`Gemini-WA-Bot-v5.2.apk`** di bawah bagian **Assets** untuk langsung men-download APK!
-            - **🔥 Mode RedMagic (Otomatis Miring Landscape + Game Space UI)**: Daftar fitur di sisi kiri dengan **8 Ikon Vektor Custom (Tanpa Emoji)**, panggung detail & tombol merah **`MULAI / BUKA PANEL >`** di sisi kanan di atas *video background loop*, serta kontrol cepat di dok bawah.
-            - **🚀 Force Update & In-App Self-Updater**, **💻 Terminal Sesi 2**, **📢 Pengumuman Multi-Grup**, **👁️ AI Vision**, **🛡️ 3 Toggle Moderasi**, **💾 Backup/Restore**, & **🎮 Server Minecraft (VPS)**.
-          files: Gemini-WA-Bot-v5.2.apk
+            ### 🔥 DodosBot / Gemini WhatsApp Bot APK v5.3 (RedMagic Darkness & Red)
+            Klik **`Gemini-WA-Bot-v5.3.apk`** di bawah bagian **Assets** untuk langsung men-download APK!
+            - **🌑🔥 Animasi `WELCOME` Tema Darkness & Crimson Red** dengan emblem mecha custom (`rm_welcome_crest.jpg`) & laser scanner.
+            - **🎛️ Panel Drawer RedMagic Slide-In Halus**: Daftar fitur di sisi kiri tetap aktif sepanjang waktu, pindah fitur instan tanpa tersangkut, dan tombol **`< KEMBALI`** serta tombol **Back Android** langsung menutup drawer dengan mulus.
+          files: Gemini-WA-Bot-v5.3.apk
 
       - name: 9. Tampilkan Link Download Langsung di Halaman Summary
         run: |
-          echo "### ✅ APK v5.2 Berhasil Dibuat!" >> $GITHUB_STEP_SUMMARY
-          echo "👉 **[KLIK DI SINI UNTUK DOWNLOAD LANGSUNG Gemini-WA-Bot-v5.2.apk](https://github.com/${{ github.repository }}/releases/download/v5.2.${{ github.run_number }}/Gemini-WA-Bot-v5.2.apk)**" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ APK v5.3 Berhasil Dibuat!" >> $GITHUB_STEP_SUMMARY
+          echo "👉 **[KLIK DI SINI UNTUK DOWNLOAD LANGSUNG Gemini-WA-Bot-v5.3.apk](https://github.com/${{ github.repository }}/releases/download/v5.3.${{ github.run_number }}/Gemini-WA-Bot-v5.3.apk)**" >> $GITHUB_STEP_SUMMARY
 
       - name: 10. Upload APK ke Workflow Artifacts (Opsional)
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: Gemini-WA-Bot-APK-v5.2
-          path: Gemini-WA-Bot-v5.2.apk
+          name: Gemini-WA-Bot-APK-v5.3
+          path: Gemini-WA-Bot-v5.3.apk
           retention-days: 1
           if-no-files-found: ignore
