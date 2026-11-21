@@ -1,4 +1,4 @@
-name: Build Gemini WA Bot APK v5.7
+name: Build CyberX Gemini WA Bot APK (Universal)
 
 on:
   push:
@@ -13,14 +13,14 @@ permissions:
 
 jobs:
   build-android-apk:
-    name: Compile Engine & Build APK v5.7 (RedMagic Darkness & Side Drawer)
+    name: Compile Engine & Build CyberX APK
     runs-on: ubuntu-latest
 
     steps:
       - name: 1. Checkout Repository
         uses: actions/checkout@v4
 
-      - name: 2. Bersihkan Artifact Lama & Ekstrak Proyek ZIP
+      - name: 2. Ekstrak Proyek ZIP & Deteksi Versi Otomatis
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -33,6 +33,9 @@ jobs:
             fi
           done
           chmod +x gradlew || true
+          VER=$(grep -oE 'versionName = "[0-9]+\.[0-9]+' app/build.gradle.kts | head -n1 | grep -oE '[0-9]+\.[0-9]+' || echo "5.8")
+          echo "BOT_VER=$VER" >> $GITHUB_ENV
+          echo "Detected version: v$VER"
 
       - name: 3. Set up Go 1.22
         uses: actions/setup-go@v5
@@ -65,34 +68,32 @@ jobs:
           gradle-version: '8.7'
           dependency-graph: disabled
 
-      - name: 7. Build Signed APK v5.7 (Update In-Place Without Uninstall)
+      - name: 7. Build Signed CyberX APK
         run: |
           gradle assembleDebug --no-daemon --console=plain
-          cp app/build/outputs/apk/debug/app-debug.apk Gemini-WA-Bot-v5.7.apk
-          ls -lh Gemini-WA-Bot-v5.7.apk
+          cp app/build/outputs/apk/debug/app-debug.apk "Gemini-WA-Bot-v${{ env.BOT_VER }}.apk"
+          ls -lh "Gemini-WA-Bot-v${{ env.BOT_VER }}.apk"
 
-      - name: 8. Publish APK ke GitHub Releases (Langsung Download!)
+      - name: 8. Publish APK ke GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v5.7.${{ github.run_number }}
-          name: "DodosBot / Gemini WA Bot APK v5.7 (RedMagic Darkness) Build #${{ github.run_number }}"
+          tag_name: v${{ env.BOT_VER }}.${{ github.run_number }}
+          name: "CyberX / Gemini WA Bot APK v${{ env.BOT_VER }} Build #${{ github.run_number }}"
           body: |
-            ### 🔥 DodosBot / Gemini WhatsApp Bot APK v5.7 (RedMagic Darkness & Red)
-            Klik **`Gemini-WA-Bot-v5.7.apk`** di bawah bagian **Assets** untuk langsung men-download APK!
-            - **🌑🔥 Animasi `WELCOME` Tema Darkness & Crimson Red** dengan emblem mecha custom (`rm_welcome_crest.jpg`) & laser scanner.
-            - **🎛️ Panel Drawer RedMagic Slide-In Halus**: Daftar fitur di sisi kiri tetap aktif sepanjang waktu, pindah fitur instan tanpa tersangkut, dan tombol **`< KEMBALI`** serta tombol **Back Android** langsung menutup drawer dengan mulus.
-          files: Gemini-WA-Bot-v5.7.apk
+            ### CyberX / Gemini WhatsApp Bot APK v${{ env.BOT_VER }}
+            Klik **`Gemini-WA-Bot-v${{ env.BOT_VER }}.apk`** di bawah bagian **Assets** untuk langsung men-download APK!
+          files: Gemini-WA-Bot-v${{ env.BOT_VER }}.apk
 
-      - name: 9. Tampilkan Link Download Langsung di Halaman Summary
+      - name: 9. Tampilkan Link Download Langsung di Summary
         run: |
-          echo "### ✅ APK v5.7 Berhasil Dibuat!" >> $GITHUB_STEP_SUMMARY
-          echo "👉 **[KLIK DI SINI UNTUK DOWNLOAD LANGSUNG Gemini-WA-Bot-v5.7.apk](https://github.com/${{ github.repository }}/releases/download/v5.7.${{ github.run_number }}/Gemini-WA-Bot-v5.7.apk)**" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ CyberX APK v${{ env.BOT_VER }} Berhasil Dibuat!" >> $GITHUB_STEP_SUMMARY
+          echo "👉 **[DOWNLOAD Gemini-WA-Bot-v${{ env.BOT_VER }}.apk](https://github.com/${{ github.repository }}/releases/download/v${{ env.BOT_VER }}.${{ github.run_number }}/Gemini-WA-Bot-v${{ env.BOT_VER }}.apk)**" >> $GITHUB_STEP_SUMMARY
 
       - name: 10. Upload APK ke Workflow Artifacts (Opsional)
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: Gemini-WA-Bot-APK-v5.7
-          path: Gemini-WA-Bot-v5.7.apk
+          name: Gemini-WA-Bot-APK-v${{ env.BOT_VER }}
+          path: Gemini-WA-Bot-v${{ env.BOT_VER }}.apk
           retention-days: 1
           if-no-files-found: ignore
