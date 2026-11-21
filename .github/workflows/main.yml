@@ -1,4 +1,4 @@
-name: Build Gemini WA Bot APK v5.5
+name: Build Gemini WA Bot APK v5.7
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   build-android-apk:
-    name: Compile Engine & Build APK v5.5 (RedMagic Darkness & Side Drawer)
+    name: Compile Engine & Build APK v5.7 (RedMagic Darkness & Side Drawer)
     runs-on: ubuntu-latest
 
     steps:
@@ -65,34 +65,34 @@ jobs:
           gradle-version: '8.7'
           dependency-graph: disabled
 
-      - name: 7. Build Signed APK v5.5 (Update In-Place Without Uninstall)
+      - name: 7. Build Signed APK v5.7 (Update In-Place Without Uninstall)
         run: |
           gradle assembleDebug --no-daemon --console=plain
-          cp app/build/outputs/apk/debug/app-debug.apk Gemini-WA-Bot-v5.5.apk
-          ls -lh Gemini-WA-Bot-v5.5.apk
+          cp app/build/outputs/apk/debug/app-debug.apk Gemini-WA-Bot-v5.7.apk
+          ls -lh Gemini-WA-Bot-v5.7.apk
 
       - name: 8. Publish APK ke GitHub Releases (Langsung Download!)
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v5.5.${{ github.run_number }}
-          name: "DodosBot / Gemini WA Bot APK v5.5 (RedMagic Darkness) Build #${{ github.run_number }}"
+          tag_name: v5.7.${{ github.run_number }}
+          name: "DodosBot / Gemini WA Bot APK v5.7 (RedMagic Darkness) Build #${{ github.run_number }}"
           body: |
-            ### 🔥 DodosBot / Gemini WhatsApp Bot APK v5.5 (RedMagic Darkness & Red)
-            Klik **`Gemini-WA-Bot-v5.5.apk`** di bawah bagian **Assets** untuk langsung men-download APK!
+            ### 🔥 DodosBot / Gemini WhatsApp Bot APK v5.7 (RedMagic Darkness & Red)
+            Klik **`Gemini-WA-Bot-v5.7.apk`** di bawah bagian **Assets** untuk langsung men-download APK!
             - **🌑🔥 Animasi `WELCOME` Tema Darkness & Crimson Red** dengan emblem mecha custom (`rm_welcome_crest.jpg`) & laser scanner.
             - **🎛️ Panel Drawer RedMagic Slide-In Halus**: Daftar fitur di sisi kiri tetap aktif sepanjang waktu, pindah fitur instan tanpa tersangkut, dan tombol **`< KEMBALI`** serta tombol **Back Android** langsung menutup drawer dengan mulus.
-          files: Gemini-WA-Bot-v5.5.apk
+          files: Gemini-WA-Bot-v5.7.apk
 
       - name: 9. Tampilkan Link Download Langsung di Halaman Summary
         run: |
-          echo "### ✅ APK v5.5 Berhasil Dibuat!" >> $GITHUB_STEP_SUMMARY
-          echo "👉 **[KLIK DI SINI UNTUK DOWNLOAD LANGSUNG Gemini-WA-Bot-v5.5.apk](https://github.com/${{ github.repository }}/releases/download/v5.5.${{ github.run_number }}/Gemini-WA-Bot-v5.5.apk)**" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ APK v5.7 Berhasil Dibuat!" >> $GITHUB_STEP_SUMMARY
+          echo "👉 **[KLIK DI SINI UNTUK DOWNLOAD LANGSUNG Gemini-WA-Bot-v5.7.apk](https://github.com/${{ github.repository }}/releases/download/v5.7.${{ github.run_number }}/Gemini-WA-Bot-v5.7.apk)**" >> $GITHUB_STEP_SUMMARY
 
       - name: 10. Upload APK ke Workflow Artifacts (Opsional)
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: Gemini-WA-Bot-APK-v5.5
-          path: Gemini-WA-Bot-v5.5.apk
+          name: Gemini-WA-Bot-APK-v5.7
+          path: Gemini-WA-Bot-v5.7.apk
           retention-days: 1
           if-no-files-found: ignore
